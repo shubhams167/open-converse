@@ -1,0 +1,30 @@
+version: "3.9"
+name: "open-converse"
+services:
+  open-converse-ollama:
+    image: ollama/ollama:latest
+    container_name: "open-converse-ollama"
+    ports:
+      - 11434:11434
+    volumes:
+      - ./ollama:/root/.ollama
+  open-converse-ollama-setup:
+    image: ollama/ollama:latest
+    container_name: "open-converse-ollama-setup"
+    restart: "no"
+    environment:
+      - OLLAMA_HOST=open-converse-ollama
+    entrypoint: []
+    command: /bin/bash -c "ollama pull llama2-uncensored:7b && ollama pull mistral"
+    depends_on:
+      - open-converse-ollama
+  open-converse-nextjs:
+    build: .
+    image: open-converse-nextjs
+    container_name: open-converse-nextjs
+    environment:
+      - OLLAMA_HOST=open-converse-ollama:11434
+    ports:
+      - 5000:5000
+    depends_on:
+      - open-converse-ollama-setup
