@@ -2,6 +2,8 @@
 
 OpenConverse is an open-source [Next.js](https://nextjs.org/) based ChatGPT-like web app which runs LLMs locally on linux/MacOS using [Ollama](https://ollama.com).
 
+![Screenshot](docs/screenshot.png)
+
 ## Getting Started with Docker
 
 Download and install [Docker](https://docker.com) (skip if already installed)
@@ -56,7 +58,13 @@ Install all Next.js dependencies
 npm ci
 ```
 
-Start the server
+Make sure Ollama server is running
+
+```bash
+ollama serve
+```
+
+Start the Next.js server
 
 ```bash
 npm run dev
